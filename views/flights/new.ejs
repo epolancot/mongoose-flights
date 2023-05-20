@@ -1,0 +1,44 @@
+<%- include("../partials/header") %>
+    <div class="wrap push-down">
+        <form action="/flights" method="post">
+            <div class="mb-3">
+                <label for="airlineSelect" class="form-label">Airline</label>
+                <select class="form-select" aria-label="Select Airline" name="airline">
+                    <option selected>Select Airline</option>
+                    <option value="1">American Airlines</option>
+                    <option value="2">Delta</option>
+                    <option value="3">Jet Blue</option>
+                    <option value="4">South West</option>
+                    <option value="5">United Airlines</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="airpotSelect" class="form-label">Airport</label>
+                <select class="form-select" aria-label="Select Airport" name="airport">
+                    <option selected>Select Airport</option>
+                    <option value="1">AUS</option>
+                    <option value="2">DEN</option>
+                    <option value="3">JFK</option>
+                    <option value="4">LAG</option>
+                    <option value="5">LAX</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="flightNo0" class="form-label">Flight No.</label>
+                <input type="text" class="form-control" id="flightNo" name="flightNo">
+            </div>
+
+            <div class="mb-3 date">
+                <label for="date" class="form-label">Departs</label>
+                <input class="form-control" id="date" name="departs" placeholder="MM/DD/YYY" type="date"/>
+            </div>    
+
+            <!-- <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div> -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <%- include("../partials/footer") %>
