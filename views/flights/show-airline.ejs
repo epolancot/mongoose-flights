@@ -1,11 +1,10 @@
 <%- include("../partials/header") %>
 <div class="main-wrap push-down">
-<h2>Flights</h2>
+<h2><img src="/images/<%= icon %>.png"/> <%= title %> Flights</h2>
 
 <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">Airline</th>
         <th scope="col">Airport</th>
         <th scope="col">Flight No.</th>
         <th scope="col">Departure date</th>
@@ -15,7 +14,6 @@
     <tbody>
       <% flights.forEach(function(f) {%>
         <tr>
-          <td><img src="/images/<%= f.airline %>.png"/>  <b><%= f.airline %></b></td>
           <td><%= f.airport %></td>
           <td><%= f.flightNo %></td>
           <td><%= f.departs %></td>
@@ -24,6 +22,7 @@
       <% }) %>
     </tbody>
   </table>
+
 </div>
 
 <%- include("../partials/footer") %>

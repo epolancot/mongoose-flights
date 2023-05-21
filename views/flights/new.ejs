@@ -3,42 +3,58 @@
         <form action="/flights" method="post">
             <div class="mb-3">
                 <label for="airlineSelect" class="form-label">Airline</label>
-                <select class="form-select" aria-label="Select Airline" name="airline">
-                    <option selected>Select Airline</option>
-                    <option value="1">American Airlines</option>
+                <select class="form-select" aria-label="Select Airline" name="airline" required>
+                    <option selected disabled value="">Select Airline</option>
+                    <option value="1">American</option>
                     <option value="2">Delta</option>
-                    <option value="3">Jet Blue</option>
-                    <option value="4">South West</option>
-                    <option value="5">United Airlines</option>
+                    <option value="3">Southwest</option>
+                    <option value="4">United</option>
+                    <option value="5">Virgin</option>
                 </select>
+                <div class="invalid-feedback">
+                    Please select a valid airline.
+                </div>
             </div>
             <div class="mb-3">
                 <label for="airpotSelect" class="form-label">Airport</label>
-                <select class="form-select" aria-label="Select Airport" name="airport">
-                    <option selected>Select Airport</option>
+                <select class="form-select" aria-label="Select Airport" name="airport" required>
+                    <option selected disabled value="">Select Airport</option>
                     <option value="1">AUS</option>
                     <option value="2">DEN</option>
                     <option value="3">JFK</option>
                     <option value="4">LAG</option>
                     <option value="5">LAX</option>
                 </select>
+                <div class="invalid-feedback">
+                    Please select a valid airport.
+                </div>
             </div>
             <div class="mb-3">
                 <label for="flightNo0" class="form-label">Flight No.</label>
-                <input type="text" class="form-control" id="flightNo" name="flightNo">
+                <input type="text" class="form-control" id="flightNo" name="flightNo" required>
             </div>
-
+            <div class="invalid-feedback">
+                Please select a valid flight number. Must be between 10 and 9999.
+            </div>
             <div class="mb-3 date">
                 <label for="date" class="form-label">Departs</label>
-                <input class="form-control" id="date" name="departs" placeholder="MM/DD/YYY" type="date"/>
-            </div>    
-
+                <input class="form-control" id="date" name="departs" placeholder="MM/DD/YYY" type="datetime-local" required/>
+            </div>  
+                <div class="invalid-feedback">
+                    Please select a valid date and time.
+                </div> 
             <!-- <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
             </div> -->
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <% if (errorMsg !== "") {%>
+        <div class="alert alert-warning alert-dismissible fade show push-down" role="alert">
+            <strong>Holy guacamole!</strong> <%= errorMsg %>>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <%}%>
     </div>
 
     <%- include("../partials/footer") %>

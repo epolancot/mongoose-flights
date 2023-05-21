@@ -3,15 +3,16 @@ const Flight = require('../models/flight');
 module.exports = {
     index,
     new: newFlight,
-    create
+    create,
+    showAirline
 };
 
 async function index(req, res){
-    const fff = await Flight.getAll() 
-    console.log(fff)
+    const flights = await Flight.getAll() 
+
     res.render('flights/index', {
         title: "Mongoose Flights",
-        flights: fff
+        flights: flights
     })
 }
 
@@ -29,8 +30,6 @@ async function create(req, res) {
     //req.body.nowShowing = !!req.body.nowShowing;
     // remove any whitespace at start and end of flight
     //req.body.flight = req.body.flight.trim();
-
-    console.log(req.body)
   
     try {
         await Flight.create(req.body);
@@ -42,5 +41,14 @@ async function create(req, res) {
         console.log(err);
         res.render('flights/new', { errorMsg: err.message });
     }
+  }
 
+  async function showAirline(req, res) {
+    const airline = await Flight.getAirline(req.params.airline)
+    console.log(req.params.airline)
+    res.render('flights/show-airline', {
+        icon: req.params.airline,
+        title: req.params.airline,
+        flights: airline
+    })
   }
