@@ -34,6 +34,7 @@ const flightSchema = new Schema(
 const Flight = mongoose.model('Flight', flightSchema)
 
 module.exports = {
+    getDefault,
     create,
     getAll,
     getAirline
@@ -132,5 +133,16 @@ async function getAirline(query){
 
 
 return formattedFlights
+}
+
+async function getDefault() {
+    const newFlight = new Flight();
+// Obtain the default date
+const dt = newFlight.departs
+// Format the date for the value attribute of the input
+let departsDate = `${dt.getFullYear()}-${(dt.getMonth() + 1).toString().padStart(2, '0')}`
+departsDate += `-${dt.getDate().toString().padStart(2, '0')}T${dt.toTimeString().slice(0, 5)}`
+
+return departsDate
 }
 

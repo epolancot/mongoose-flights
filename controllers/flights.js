@@ -16,12 +16,16 @@ async function index(req, res){
     })
 }
 
-function newFlight(req, res) {
-    // We'll want to be able to render an
-    // errorMsg if the create action fails
+async function newFlight(req, res) {
+    const departsDate = await Flight.getDefault();
+
+    console.log(departsDate)
+
     res.render('flights/new', { 
+        departsDate,
         errorMsg: '',
         title: 'New Flight'
+        
      });
   }
 
