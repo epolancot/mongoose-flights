@@ -40,11 +40,57 @@ module.exports = {
     getAirline
 }
 
+async function getDefault() {
+    const newFlight = new Flight();
+    // Obtain the default date
+    const dt = newFlight.departs
+    // Format the date for the value attribute of the input
+    let departsDate = `${dt.getFullYear()}-${(dt.getMonth() + 1).toString().padStart(2, '0')}`
+    departsDate += `-${dt.getDate().toString().padStart(2, '0')}T${dt.toTimeString().slice(0, 5)}`
+    
+    return departsDate
+    }
+
+async function create(flight){
+    const formattedFlightObj = {}
+    // prepare .airline
+    if (flight.airline === "1") {
+        formattedFlightObj.airline = airlineOptions[1]
+    } else if (flight.airline === "2") {
+        formattedFlightObj.airline = airlineOptions[2]
+    } else if (flight.airline === "3") {
+        formattedFlightObj.airline = airlineOptions[3]
+    } else if (flight.airline === "4") {
+        formattedFlightObj.airline = airlineOptions[4]
+    } else if (flight.airline === "5") {
+        formattedFlightObj.airline = airlineOptions[5]
+    }
+    // prepare .airport
+    if (flight.airport === "1") {
+        formattedFlightObj.airport = airportOptions[1]
+    } else if (flight.airport === "2") {
+        formattedFlightObj.airport = airportOptions[2]
+    } else if (flight.airport === "3") {
+        formattedFlightObj.airport = airportOptions[3]
+    } else if (flight.airport === "4") {
+        formattedFlightObj.airport = airportOptions[4]
+    } else if (flight.airport === "5") {
+        formattedFlightObj.airport = airportOptions[5]
+    }
+    // prepare .flightNo
+    formattedFlightObj.flightNo = flight.flightNo        
+    // prepare .departures
+    formattedFlightObj.departs = flight.departs
+await Flight.create(formattedFlightObj)
+}
+
 async function getAll(){
     const flights = await Flight.find({})
+    flights.sort(function(a,b){
+        return new Date(a.departs) - new Date(b.departs)
+    })
     const formattedFlights = []
     let flightObj = {}
-
     flights.forEach(function(flight){
         // prepare .airline
         flightObj.airline = flight.airline
@@ -59,90 +105,34 @@ async function getAll(){
         
         // Add departure time
         flightObj.time = date.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12:true})
-
         formattedFlights.push(flightObj)
         flightObj = {}
     })
-
     return formattedFlights
-
-}
-
-async function create(flight){
-    const formattedFlightObj = {}
-
-        // prepare .airline
-        if (flight.airline === "1") {
-            formattedFlightObj.airline = airlineOptions[1]
-        } else if (flight.airline === "2") {
-            formattedFlightObj.airline = airlineOptions[2]
-        } else if (flight.airline === "3") {
-            formattedFlightObj.airline = airlineOptions[3]
-        } else if (flight.airline === "4") {
-            formattedFlightObj.airline = airlineOptions[4]
-        } else if (flight.airline === "5") {
-            formattedFlightObj.airline = airlineOptions[5]
-        }
-
-        // prepare .airport
-        if (flight.airport === "1") {
-            formattedFlightObj.airport = airportOptions[1]
-        } else if (flight.airport === "2") {
-            formattedFlightObj.airport = airportOptions[2]
-        } else if (flight.airport === "3") {
-            formattedFlightObj.airport = airportOptions[3]
-        } else if (flight.airport === "4") {
-            formattedFlightObj.airport = airportOptions[4]
-        } else if (flight.airport === "5") {
-            formattedFlightObj.airport = airportOptions[5]
-        }
-
-        // prepare .flightNo
-        formattedFlightObj.flightNo = flight.flightNo 
-        
-        // prepare .departures
-        formattedFlightObj.departs = flight.departs
-
-
-   await Flight.create(formattedFlightObj)
 }
 
 async function getAirline(query){
     const airline = await Flight.find({airline: query})
+    airline.sort(function(a,b){
+        return new Date(a.departs) - new Date(b.departs)
+    })
     const formattedFlights = []
     let flightObj = {}
-
     airline.forEach(function(flight){
         // prepare .airline
         flightObj.airline = flight.airline
         // prepare .airport
         flightObj.airport = flight.airport
         // flightNo
-        flightObj.flightNo = flight.flightNo  
-        
+        flightObj.flightNo = flight.flightNo         
         // format date
         const date = new Date(flight.departs)
-        flightObj.departs = `${days[date.getDay()]} ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
-        
+        flightObj.departs = `${days[date.getDay()]} ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`       
         // Add departure time
         flightObj.time = date.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12:true})
-
         formattedFlights.push(flightObj)
         flightObj = {}
     })
-
-
 return formattedFlights
-}
-
-async function getDefault() {
-    const newFlight = new Flight();
-// Obtain the default date
-const dt = newFlight.departs
-// Format the date for the value attribute of the input
-let departsDate = `${dt.getFullYear()}-${(dt.getMonth() + 1).toString().padStart(2, '0')}`
-departsDate += `-${dt.getDate().toString().padStart(2, '0')}T${dt.toTimeString().slice(0, 5)}`
-
-return departsDate
 }
 
