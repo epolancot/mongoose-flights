@@ -105,6 +105,13 @@ async function getAll(){
         
         // Add departure time
         flightObj.time = date.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12:true})
+        // Date comparison to determine if this flight already departed
+        const currentDate = new Date()
+        if (date < currentDate) {
+            flightObj.hasPassed = true
+        } else {
+            flightObj.hasPassed = false
+        }
         formattedFlights.push(flightObj)
         flightObj = {}
     })
@@ -130,9 +137,18 @@ async function getAirline(query){
         flightObj.departs = `${days[date.getDay()]} ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`       
         // Add departure time
         flightObj.time = date.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12:true})
+        // Date comparison to determine if this flight already departed
+        const currentDate = new Date()
+        if (date < currentDate) {
+            flightObj.hasPassed = true
+        } else {
+            flightObj.hasPassed = false
+        }
         formattedFlights.push(flightObj)
         flightObj = {}
     })
+
+    console.log(formattedFlights)
 return formattedFlights
 }
 
