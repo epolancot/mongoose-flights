@@ -1,10 +1,10 @@
 const Flight = require('../models/flight');
+const Ticket = require('../models/ticket');
+
 const airlineOptions = ["#", "American", "Delta", "Southwest", "United", "Virgin"]
 const airportOptions = ["#", "AUS", "DEN", "JFK", "LAG", "LAX"]
 const days = {0: "Sun.", 1: "Mon.", 2:"Tue.", 3:"Wed.", 4:"Thu.", 5:"Fri.", 6:"Sat."}
 const months = {0: "JAN", 1: "FEB", 2:"MAR", 3:"APR", 4:"MAY", 5:"JUN", 6:"JUL",7: "AUG", 8: "SEP", 9:"OCT", 10:"NOV", 11:"DEC"}
-
-
 
 module.exports = {
     index,
@@ -50,7 +50,10 @@ async function index(req, res){
     // render =========================
     res.render('flights/index', {
         title: "Mongoose Flights",
-        flights: formattedFlights
+        flights: formattedFlights,
+        home: "active",
+        addFlight: "",
+        createTicket: ""
     })
     // render =========================
 }
@@ -67,7 +70,10 @@ function newFlight(req, res) {
     res.render('flights/new', { 
         departsDate,
         errorMsg: '',
-        title: 'New Flight'       
+        title: 'New Flight',
+        home: "",
+        addFlight: "active",
+        createTicket: ""       
     });
     // render =========================
 }
@@ -155,7 +161,10 @@ async function showAirline(req, res) {
     res.render('flights/show-airline', {
         icon: req.params.airline,
         title: req.params.airline,
-        flights: formattedFlights
+        flights: formattedFlights,
+        home: "",
+        addFlight: "",
+        createTicket: ""  
     })
     // render =========================
 }
@@ -209,6 +218,9 @@ async function showFlight(req, res) {
     // render =========================
     res.render('flights/show-flight', {
         icon: flight.airline,
+        home: "",
+        addFlight: "",
+        createTicket: "", 
         title: `${flight.airline} Flight No. ${flight.flightNo}`,
         flight: flightObj,
         airports: availableAirports,

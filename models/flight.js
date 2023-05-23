@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-const  ObjectID = require('mongodb').ObjectId
+
+
 
 const Schema = mongoose.Schema;
 
@@ -36,7 +37,11 @@ const flightSchema = new Schema(
             return new Date().setFullYear(new Date().getFullYear() + 1);
         } 
     },
-    destinations: [destinationsSchema]
+    destinations: [destinationsSchema],
+    tickets: { 
+        type: Schema.Types.ObjectId,
+        ref: 'Tickets'
+    }
     },
     {
     timestamps: true,

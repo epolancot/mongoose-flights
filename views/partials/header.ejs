@@ -32,10 +32,7 @@
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/"><i class="bi bi-house-fill"></i> Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/flights/new"><i class="bi bi-plus-circle-fill"></i> Add Flight</a>
+                        <a class="nav-link <%= home %>>" aria-current="page" href="/"><i class="bi bi-house-fill"></i> Home</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -48,15 +45,15 @@
                             <li><a class="dropdown-item" href="/flights/airline/Southwest">Southwest</a></li>
                             <li><a class="dropdown-item" href="/flights/airline/United">United</a></li>
                             <li><a class="dropdown-item" href="/flights/airline/Virgin">Virgin</a></li>
-                            <li>
-                                <!-- <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">AUS</a></li>
-                            <li><a class="dropdown-item" href="#">DEN</a></li>
-                            <li><a class="dropdown-item" href="#">JFK</a></li>
-                            <li><a class="dropdown-item" href="#">LAG</a></li>
-                            <li><a class="dropdown-item" href="#">LAX</a></li>-->
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= addFlight %>" href="/flights/new"><i class="bi bi-plus-circle-fill"></i> Add Flight</a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="/flights/tickets/generate/new" method="POST">
+                        <a class="nav-link <%= createTicket %>" aria-current="page" onclick="this.closest('form').submit();return false;"><i class="bi bi-ticket-fill"></i> Create Ticket</a>
+                        </form>
                     </li>
                 </ul>
                 <!-- <form class="d-flex" role="search">
