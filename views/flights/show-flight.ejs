@@ -1,0 +1,94 @@
+<%- include("../partials/header") %>
+<div class="main-wrap push-down">
+<h2><img src="/images/<%= icon %>.png"/> <%= flight.airline %> Flight No. <%= flight.flightNo %></h2>
+<div class="push-down">
+<h4>Departure</h4>
+<table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Airport</th>
+        <th scope="col">Date</th>
+        <th scope="col">Time</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><%= flight.airport %></td>
+          <td><%= flight.departs %></td>
+          <td><%= flight.time %></td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+<div class="push-down">
+  <% 
+  let arrivalMsg = ""
+  if (flight.destinations.length === 0) {
+    arrivalMsg = "" 
+  } else {
+    if (arrivalMsg < 2) {
+      arrivalMsg = "- Nonstop"
+    } else {
+      arrivalMsg = `- ${flight.destinations.length} Stops`
+    }
+  } %>
+
+  <h4>Destinations <%= arrivalMsg %></h4>
+  <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Airport</th>
+          <th scope="col">Date</th>
+          <th scope="col">Time</th>
+        </tr>
+      </thead>
+      <tbody>
+          <% flight.destinations.forEach(function(destination) {%>
+          <tr>
+            <td><%= destination.airport %></td>
+            <td><%= destination.arrival %></td>
+            <td><%= destination.time %></td>
+          </tr>
+          <% })%>
+      </tbody>
+    </table>
+  </div>
+  <div class="push-down wrap">
+    <div class="center-els">
+      <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-div" aria-expanded="false" aria-controls="collapseExample">
+        <i class="bi bi-send-plus-fill"></i> Add Destination
+      </button>
+    </div>
+    <div id="collapse-div" class="collapse" style="margin-top: 10px;">
+      <form action="/flights/destinations/<%= flight.id %>/add" method="post">
+        <div class="mb-3">
+            <label for="airpot" class="form-label">Destination Airport</label>
+            <select class="form-select" aria-label="Select Airport" name="airport" required>
+                <option selected disabled value="">Select Airport</option>
+                <% airports.forEach (function(airport, idx) {
+                  if (airport !== "" && airport !== "#") { %>
+                    <option value="<%= idx %>"><%= airport %></option>
+                  <% }
+                  }) %>  
+            </select>
+            <div class="invalid-feedback">
+                Please select a valid airport.
+            </div>
+        </div>
+        <div class="mb-3 date">
+            <label for="date" class="form-label">Arrival</label>
+            <input class="form-control" id="date" name="arrival" placeholder="MM/DD/YYY" type="datetime-local" value="<%= defaultArrivalDate %>" required/> 
+            <div class="invalid-feedback">
+                Please select a valid date and time.
+            </div> 
+        </div>
+        <div class="center-els">
+          <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add</button>
+        </div>   
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<%- include("../partials/footer") %>

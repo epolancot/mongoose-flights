@@ -20,6 +20,14 @@ a {
   margin-top: 5vh;
 }
 
+.center-els {
+  text-align: center;
+}
+
+.right-align-els {
+  text-align: right;
+}
+
 table.dataTable thead .sorting:after,
 table.dataTable thead .sorting:before,
 table.dataTable thead .sorting_asc:after,
