@@ -111,19 +111,28 @@ if (flight.destinations.length === 0) {
       </button>
       </div>
     <div id="collapse-tickets" class="collapse" style="margin-top: 10px;">
-      <form action="/flights/tickets/<%= flight.flightNo %>/new" method="POST">
+      <form action="/flights/tickets/new" method="POST"> 
         <button class="btn btn-dark" type="submit" data-bs-toggle="collapse" data-bs-target="#collapse-ticket-add-div" aria-expanded="false" aria-controls="collapseExample">
           Create Ticket <i class="bi bi-plus"></i>
         </button>
+        <input type="text" value="<%= flight.flightNo %>" style="visibility: hidden; display:none;" name="flightNo">
         </form> 
       <table class="table table-striped wrap">
         <thead class="thead-dark">
           <tr>
             <th scope="col">Seat</th>
             <th scope="col">Price</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
+          <% tickets.forEach(function(ticket) { %>
+            <tr>
+              <td><%= ticket.seat %></td>
+              <td>$<%= ticket.price %></td>
+              <td>[ ]</td>
+            </tr>
+          <% }) %>
         </tbody>
       </table>
     </div>

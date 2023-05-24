@@ -1,6 +1,6 @@
 <%- include("../partials/header") %>
 <div class="wrap push-down">
-    <form action="/flights" method="post">
+    <form action="/flights/tickets/create" method="post">
         <div class="mb-3">
             <label for="seat" class="form-label">Seat [A1-F99]</label>
             <input type="text" class="form-control" id="seat" name="seat" pattern="[A-F][1-9]\d?" required>
@@ -24,9 +24,9 @@
         </div>
         <button type="submit" class="btn btn-dark">Create Ticket <i class="bi bi-plus-square-fill"></i></button>
     </form>
-    <% if (errorMsg !== "") {%>
-    <div class="alert alert-warning alert-dismissible fade show push-down" role="alert">
-        <strong>Holy guacamole!</strong> <%= errorMsg %>>
+    <% if (message !== "") {%>
+    <div class="alert <%= messageType %> alert-dismissible fade show push-down" role="alert">
+        <%= message %>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     <%}%>

@@ -7,7 +7,6 @@ const ticketsSchema = new Schema({
     seat: {
         type: String,
         required: true,
-        match: /[A-F][1-9]\d?/
     },
     price: {
         type: Number,
@@ -15,7 +14,7 @@ const ticketsSchema = new Schema({
     },
     flight: {
         type: Schema.Types.ObjectId,
-        ref: 'Flights'
+        ref: 'Flight'
     }
     }, 
     {
@@ -24,3 +23,5 @@ const ticketsSchema = new Schema({
 );  
 
 module.exports = mongoose.model('Ticket', ticketsSchema)
+
+

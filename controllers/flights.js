@@ -1,6 +1,7 @@
 const Flight = require('../models/flight');
 const Ticket = require('../models/ticket');
 
+
 const airlineOptions = ["#", "American", "Delta", "Southwest", "United", "Virgin"]
 const airportOptions = ["#", "AUS", "DEN", "JFK", "LAG", "LAX"]
 const days = {0: "Sun.", 1: "Mon.", 2:"Tue.", 3:"Wed.", 4:"Thu.", 5:"Fri.", 6:"Sat."}
@@ -171,6 +172,10 @@ async function showAirline(req, res) {
 
 async function showFlight(req, res) {
     const flight = await Flight.findById(req.params.id)
+    const tickets = await Ticket.findById(req.params.id).populate('Flight')
+    
+    console.log(tickets)
+    //console.log(ticketsTest)
     let flightObj = {}
     flightObj.id = flight._id
     flightObj.airline = flight.airline
@@ -215,6 +220,9 @@ async function showFlight(req, res) {
     let arrivalDate = `${dt.getFullYear()}-${(dt.getMonth() + 1).toString().padStart(2, '0')}`
     arrivalDate += `-${dt.getDate().toString().padStart(2, '0')}T${dt.toTimeString().slice(0, 5)}`
 
+    // show tickets
+    const flightTickets = await Ticket.find({flight: flightObj.id})
+
     // render =========================
     res.render('flights/show-flight', {
         icon: flight.airline,
@@ -224,7 +232,9 @@ async function showFlight(req, res) {
         title: `${flight.airline} Flight No. ${flight.flightNo}`,
         flight: flightObj,
         airports: availableAirports,
-        defaultArrivalDate: arrivalDate
+        defaultArrivalDate: arrivalDate,
+        tickets: flightTickets
     })
     // render =========================
 }
+
