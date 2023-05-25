@@ -15,14 +15,13 @@
       <% flights.forEach(function(f) {%>
         <tr>
           <td><%= f.airport %></td>
-          <td><%= f.flightNo %></td>
+          <td><a href="/flights/<%= f.id %>" style="text-decoration: none; color:blue;"><%= f.flightNo %></a></td>
           <td><%= f.departs %></td>
           <td><%= f.time %></td>
         </tr>
       <% }) %>
     </tbody>
   </table>
-
 </div>
 
 <%- include("../partials/footer") %>

@@ -17,10 +17,9 @@
       <% flights.forEach(function(f) {%>
         <% if (f.hasPassed === true) {%>
         <tr style="background: rgb(255, 223, 223);">
-        <%} else {%>
+      <%} else {%>
         <tr>
-        <% } %>  
-        
+      <% } %>  
           <td><img src="/images/<%= f.airline %>.png"/>  <b><%= f.airline %></b></td>
           <td><%= f.airport %></td>
           <td><%= f.flightNo %></td>
@@ -31,7 +30,6 @@
       <% }) %>
     </tbody>
   </table>
-
 </div>
 
 <%- include("../partials/footer") %>

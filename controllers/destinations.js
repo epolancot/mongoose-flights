@@ -1,5 +1,5 @@
 const Flight = require('../models/flight');
-const airportOptions = ["#", "AUS", "DEN", "JFK", "LAG", "LAX"]
+const airportOptions = ["#", "AUS", "DEN", "JFK", "TPA", "LAX"]
 
 module.exports = {
   create
@@ -21,10 +21,8 @@ async function create(req, res) {
     } else if (req.body.airport === "5") {
         destinationsObj.airport = airportOptions[5]
     }
-    //prepare .date
     destinationsObj.arrival = req.body.arrival
-    
-    // We can push (or unshift) subdocs into Mongoose arrays
+
     flight.destinations.push(destinationsObj);
     try {
       // Save any changes made to the flight doc
@@ -32,6 +30,5 @@ async function create(req, res) {
     } catch (err) {
       console.log(err);
     }
-    // Step 5:  Respond to the Request (redirect if data has been changed)
     res.redirect(`/flights/${flight._id}`);
   }

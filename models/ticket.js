@@ -6,11 +6,11 @@ const Schema = mongoose.Schema;
 const ticketsSchema = new Schema({
     seat: {
         type: String,
-        required: true,
+        required: true
     },
     price: {
         type: Number,
-        min: 0,
+        min: 0
     },
     flight: {
         type: Schema.Types.ObjectId,

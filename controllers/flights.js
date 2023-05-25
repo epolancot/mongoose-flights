@@ -1,9 +1,7 @@
 const Flight = require('../models/flight');
 const Ticket = require('../models/ticket');
-
-
 const airlineOptions = ["#", "American", "Delta", "Southwest", "United", "Virgin"]
-const airportOptions = ["#", "AUS", "DEN", "JFK", "LAG", "LAX"]
+const airportOptions = ["#", "AUS", "DEN", "JFK", "TPA", "LAX"]
 const days = {0: "Sun.", 1: "Mon.", 2:"Tue.", 3:"Wed.", 4:"Thu.", 5:"Fri.", 6:"Sat."}
 const months = {0: "JAN", 1: "FEB", 2:"MAR", 3:"APR", 4:"MAY", 5:"JUN", 6:"JUL",7: "AUG", 8: "SEP", 9:"OCT", 10:"NOV", 11:"DEC"}
 
@@ -47,8 +45,10 @@ async function index(req, res){
         }
         formattedFlights.push(flightObj)
         flightObj = {}
+
+
     })
-    // render =========================
+
     res.render('flights/index', {
         title: "Mongoose Flights",
         flights: formattedFlights,
@@ -56,7 +56,6 @@ async function index(req, res){
         addFlight: "",
         createTicket: ""
     })
-    // render =========================
 }
 
 function newFlight(req, res) {
@@ -67,7 +66,6 @@ function newFlight(req, res) {
     let departsDate = `${dt.getFullYear()}-${(dt.getMonth() + 1).toString().padStart(2, '0')}`
     departsDate += `-${dt.getDate().toString().padStart(2, '0')}T${dt.toTimeString().slice(0, 5)}`
     
-    // render =========================
     res.render('flights/new', { 
         departsDate,
         errorMsg: '',
@@ -76,16 +74,11 @@ function newFlight(req, res) {
         addFlight: "active",
         createTicket: ""       
     });
-    // render =========================
 }
 
 async function create(req, res) {
-    // convert nowShowing's checkbox of nothing or "on" to boolean
-    //req.body.nowShowing = !!req.body.nowShowing;
-    // remove any whitespace at start and end of flight
-    //req.body.flight = req.body.flight.trim();
     try {
-        let flight = req.body
+        const flight = req.body
         const formattedFlightObj = {}
         // prepare .airline
         if (flight.airline === "1") {
@@ -121,8 +114,6 @@ async function create(req, res) {
         await Flight.create(formattedFlightObj)
         res.redirect('/flights');
     } catch (err) {
-        // Typically some sort of validation error
-        console.log(err);
         res.render('flights/new', { errorMsg: err.message });
     }
 }
@@ -158,7 +149,7 @@ async function showAirline(req, res) {
         formattedFlights.push(flightObj)
         flightObj = {}
     })
-    // render =========================
+
     res.render('flights/show-airline', {
         icon: req.params.airline,
         title: req.params.airline,
@@ -167,24 +158,20 @@ async function showAirline(req, res) {
         addFlight: "",
         createTicket: ""  
     })
-    // render =========================
 }
 
 async function showFlight(req, res) {
     const flight = await Flight.findById(req.params.id)
-    const tickets = await Ticket.findById(req.params.id).populate('Flight')
-    
-    console.log(tickets)
-    //console.log(ticketsTest)
+
     let flightObj = {}
     flightObj.id = flight._id
     flightObj.airline = flight.airline
     flightObj.airport = flight.airport
     flightObj.flightNo = flight.flightNo
-    //format departure date
+    // format departure date
     const date = new Date(flight.departs)
     flightObj.departs = `${days[date.getDay()]} ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}` 
-    // Add departure time
+    // add departure time
     flightObj.time = date.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12:true})
 
     flightObj.destinations = []
@@ -212,6 +199,11 @@ async function showFlight(req, res) {
         availableAirports[index] = ""
     })
 
+    // find departure airport
+    let idx = availableAirports.indexOf(flight.airport)
+    availableAirports[idx] = ""
+
+
     // show default arrival date
     const newFlight = new Flight();
     // Obtain the default date
@@ -223,7 +215,18 @@ async function showFlight(req, res) {
     // show tickets
     const flightTickets = await Ticket.find({flight: flightObj.id})
 
-    // render =========================
+    // prepare ticket obj
+    const formattedTickets = []
+    let formattedTicketsObj = {}
+    let Dollar = new Intl.NumberFormat('en-US', {style:'currency', currency: 'USD'})
+    flightTickets.forEach(function(t){
+        formattedTicketsObj.id = t._id
+        formattedTicketsObj.seat = t.seat
+        formattedTicketsObj.price = Dollar.format(t.price)
+        formattedTickets.push(formattedTicketsObj)
+        formattedTicketsObj = {}
+    })
+
     res.render('flights/show-flight', {
         icon: flight.airline,
         home: "",
@@ -233,8 +236,8 @@ async function showFlight(req, res) {
         flight: flightObj,
         airports: availableAirports,
         defaultArrivalDate: arrivalDate,
-        tickets: flightTickets
+        tickets: formattedTickets
     })
-    // render =========================
 }
+
 

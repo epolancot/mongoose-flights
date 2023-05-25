@@ -3,7 +3,8 @@ const Ticket = require('../models/ticket');
 
 module.exports = {
     new: newTicket,
-    create
+    create,
+    delete: deleteTicket
 };
 
 function newTicket(req, res) {
@@ -22,7 +23,6 @@ function newTicket(req, res) {
 } 
 
 async function create(req, res) {
-
     try {
         // get ObjectID for flightNo
         const ticket = {}
@@ -46,9 +46,8 @@ async function create(req, res) {
         ticket.price = req.body.price
         ticket.flight = flight._id
 
-        await Ticket.create(ticket)
 
-
+    await Ticket.create(ticket)
         res.redirect(`/flights/${ticket.flight}`)
         
     } catch (err) {
@@ -63,4 +62,33 @@ async function create(req, res) {
             messageType: "alert-warning" 
             });
     }
+}
+
+async function deleteTicket(req, res) {
+    try {
+    const ticket = await Ticket.findById(req.params.id)
+    const flightId = req.body.flightId
+
+    await Ticket.deleteOne({ _id: ticket._id}).then(function(data){
+        console.log(data)
+    }, function(error) {
+        console.error(error)
+    })
+
+    console.log(flightId)
+    res.redirect(`/flights/${flightId}`)
+
+    } catch (err) {
+        console.log(err);
+        res.render('tickets/new', { 
+            title: "Create Ticket",
+            home: "",
+            addFlight: "",
+            createTicket: "active",
+            flightNo: "",
+            message: `Holy guacamole! ${err.message}`,
+            messageType: "alert-warning" 
+            });
+    }
+
 }
