@@ -60,7 +60,7 @@ MVC
 Displays all flights' basic information. Includes a _view_ button for further details.
 ### Filter Option
 ![Filter](/public/images/readme-imgs/ss2-filter.png)
-Displays flights by Airport. Allows access to each flight through a link in the flight's number.
+Displays flights by Airline. Allows access to each flight through a link in the flight's number.
 ### Add Flight
 ![Add Flight](/public/images/readme-imgs/ss3-add-flight.png)
 All fields are required. Back-end sanitazion of inputs to store flight's information in a scalable format.
