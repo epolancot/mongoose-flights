@@ -57,27 +57,35 @@ MVC
 ## **Screenshots**
 ### Home Page
 ![Index](/public/images/readme-imgs/ss1-index.png)
+
 Displays all flights' basic information. Includes a _view_ button for further details.
 ### Filter Option
 ![Filter](/public/images/readme-imgs/ss2-filter.png)
+
 Displays flights by Airline. Allows access to each flight through a link in the flight's number.
 ### Add Flight
 ![Add Flight](/public/images/readme-imgs/ss3-add-flight.png)
+
 All fields are required. Back-end sanitazion of inputs to store flight's information in a scalable format.
 ### Create Ticket
 ![Create Ticket](/public/images/readme-imgs/ss4-create-ticket.png)
+
 All fields required. Front and back end efforts to avoid wrong input format and pattern. If the user lands from a Flight's page view, Flight Number field is automatically populated. 
 ### Show Flight
 ![Show Flight](/public/images/readme-imgs/ss5-flight.png)
+
 Leveraging Bootrstap's collapse feature to display all flight's information in the most simple and user friendly way.
 ### Destinations
 ![Destinations](/public/images/readme-imgs/ss6-destinations.png)
+
 Allows to add destinations to the flight, dismissing already used airports in that route from the list.
 ### Tickets
 ![Tickets](/public/images/readme-imgs/ss7-tickets.png)
+
 Displays tickets a list of already created tickets. Also, allows to create and delete the tickets.
 ### Supplemenatry
 ![Tickets](/public/images/readme-imgs/ss8-supplementary.png)
+
 Past flights are displayed in red.
 
 ---
